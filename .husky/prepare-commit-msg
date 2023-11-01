@@ -1,0 +1,12 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+BRANCH_NAME=$(git symbolic-ref --short HEAD)
+COMMIT_MSG_FILE=$1
+COMMIT_MSG=$(cat $COMMIT_MSG_FILE)
+
+# 브랜치 이름과 커밋 메시지를 조합하여 새로운 커밋 메시지 생성
+NEW_COMMIT_MSG="$BRANCH_NAME/$COMMIT_MSG"
+
+# 새로운 커밋 메시지를 파일에 쓰기
+echo "$NEW_COMMIT_MSG" > $COMMIT_MSG_FILE
