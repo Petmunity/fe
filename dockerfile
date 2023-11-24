@@ -28,10 +28,11 @@ COPY --from=builder /app/.next/static ./static
 COPY --from=builder /app/public ./public
 
 # Copy the Nginx configuration file
-COPY infra/nginx.conf /etc/nginx/conf.d/default.conf.template
+COPY infra/nginx.conf /etc/nginx/conf.d/default.conf
 
 # Expose port based on the $PORT environment variable
-EXPOSE $PORT
+EXPOSE 8080
 
 # Replace $PORT in Nginx configuration file and start Nginx
-CMD /bin/sh -c "envsubst '\$PORT' < /etc/nginx/conf.d/default.conf.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"
+# CMD /bin/sh -c "envsubst '\$PORT' < /etc/nginx/conf.d/default.conf.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"
+CMD ["nginx", "-g", "daemon off;"]
