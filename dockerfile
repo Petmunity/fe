@@ -31,7 +31,6 @@ COPY --from=builder /app/public ./public
 COPY infra/nginx.conf /etc/nginx/conf.d/default.conf.template
 
 # Expose port based on the $PORT environment variable
-EXPOSE ${PORT}
 
 # Replace $PORT in Nginx configuration file and start Nginx
 CMD /bin/sh -c "envsubst '\$PORT' < /etc/nginx/conf.d/default.conf.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"
