@@ -29,7 +29,7 @@ COPY --from=builder /app/.next/static ./static
 COPY --from=builder /app/public ./public
 
 # Start app
-EXPOSE 8080
+CMD ["sh", "-c", "yarn start -p $PORT"]
 
-# Start app on port 8080
-CMD ["yarn", "start", "-p", "8080"]
+
+# CMD ["yarn", "start", "-p", "8080"]
