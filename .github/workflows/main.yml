@@ -38,4 +38,4 @@ jobs:
 
       - name: Deploy to Google Cloud Run
         run: |
-          gcloud run deploy petmunity-fe --image gcr.io/stately-moon-405001/petmunity-fe:latest --region asia-northeast3 --platform managed --allow-unauthenticated
+          gcloud run deploy petmunity-fe --image gcr.io/stately-moon-405001/petmunity-fe:latest --region asia-northeast1 --platform managed --allow-unauthenticated
