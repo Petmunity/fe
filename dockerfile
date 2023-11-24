@@ -1,20 +1,3 @@
-# Dockerfile
-
-# Stage 1 - the build process
-# FROM node:18-alpine as build-deps
-# WORKDIR /usr/src/app
-# COPY package.json yarn.lock ./
-# RUN yarn
-# COPY . ./
-# # COPY .env.development .env.production
-# RUN yarn build
-
-# # Stage 2 - the production environment
-# FROM nginx:1.17-alpine
-# COPY --from=build-deps /usr/src/app/.next /usr/share/nginx/html
-# COPY --from=build-deps /usr/src/app/public /usr/share/nginx/html/public
-# COPY nginx.conf /etc/nginx/conf.d/default.conf
-
 # ---- Build Stage ----
 FROM node:18 AS builder
 
@@ -29,10 +12,9 @@ RUN yarn install --frozen-lockfile
 
 # Copy the rest of your app's source code
 COPY . .
-# # COPY .env.development .env.production
+
 # Build app
 RUN yarn build
-
 
 # ---- Run Stage ----
 FROM nginx:1.19.0-alpine AS runner
@@ -41,7 +23,9 @@ FROM nginx:1.19.0-alpine AS runner
 WORKDIR /app
 
 # Copy over the artifacts from the build stage
-COPY --from=builder /app/out ./
+COPY --from=builder /app/.next/standalone ./
+COPY --from=builder /app/.next/static ./static
+COPY --from=builder /app/public ./public
 
 # Copy the Nginx configuration file
 COPY infra/nginx.conf /etc/nginx/conf.d/default.conf
