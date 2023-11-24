@@ -28,3 +28,14 @@ jobs:
           context: .
           push: true
           tags: gcr.io/stately-moon-405001/petmunity-fe:latest
+
+      - name: Setup Google Cloud SDK
+        uses: google-github-actions/setup-gcloud@v0.3.0
+        with:
+          project_id: stately-moon-405001 # 여기에 Google Cloud 프로젝트 ID를 입력하세요.
+          service_account_key: ${{ secrets.GCR_JSON_KEY }}
+          export_default_credentials: true
+
+      - name: Deploy to Google Cloud Run
+        run: |
+          gcloud run deploy petmunity-fe --image gcr.io/stately-moon-405001/petmunity-fe:latest --region asia-northeast3 --platform managed --allow-unauthenticated
