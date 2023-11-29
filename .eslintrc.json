@@ -38,6 +38,11 @@
       }
     ],
     "react/react-in-jsx-scope": 0,
-    "react/jsx-props-no-spreading": 0
+    "react/jsx-props-no-spreading": 0,
+    "react/require-default-props": "off",
+    "react/function-component-definition": "off",
+    "import/prefer-default-export": "off",
+    "@typescript-eslint/no-misused-promises": "off",
+    "eslint-disable-next-line lines-around-directive": "off"
   }
 }

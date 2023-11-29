@@ -19,6 +19,19 @@ const config: Config = {
         lg: "1024px", // 데스크탑 크기
         xl: "1280px", // 대형 디스플레이 크기
       },
+      keyframes: {
+        pulse: {
+          "0%, 100%": {
+            opacity: "1",
+          },
+          "50%": {
+            opacity: "0.4",
+          },
+        },
+      },
+      animation: {
+        pulse: "pulse 1.7s infinite",
+      },
     },
   },
   variants: {

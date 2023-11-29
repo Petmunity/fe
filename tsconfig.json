@@ -8,7 +8,7 @@
     "noEmit": true,
     "esModuleInterop": true,
     "module": "esnext",
-    "moduleResolution": "bundler",
+    "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
@@ -18,8 +18,14 @@
         "name": "next"
       }
     ],
+    "baseUrl": "./src/app/",
     "paths": {
-      "@/*": ["./src/*"]
+      "@hooks/*": ["./hooks/*"],
+      "@images/*": ["./assets/images/*"],
+      "@svgs": ["./assets/svgs"],
+      "@/*": ["./*"],
+      "@components/*": ["./components/*"],
+      "@icons": ["./components/icons/index.ts"]
     }
   },
   "include": [
