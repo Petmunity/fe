@@ -43,6 +43,7 @@
     "react/function-component-definition": "off",
     "import/prefer-default-export": "off",
     "@typescript-eslint/no-misused-promises": "off",
-    "eslint-disable-next-line lines-around-directive": "off"
+    "eslint-disable-next-line lines-around-directive": "off",
+    "@typescript-eslint/no-unused-vars": "off"
   }
 }
