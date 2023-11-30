@@ -2,26 +2,27 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
-/* :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+@layer components {
+  a.button-violet,
+  button.button-violet {
+    @apply block text-center w-full py-3 text-lg font-bold text-white transition rounded-lg bg-[#c4aafe] border border-[#c4aafe];
+  }
+  form:invalid button.button-violet,
+  button.button-violet :disabled,
+  button.button-violet :invalid {
+    @apply bg-gray-100 border-0 cursor-default text-[#666666];
+  }
+
+  section.cta-section,
+  footer.cta-section {
+    @apply sticky bottom-0 flex flex-col items-center w-full gap-2 p-4 mt-auto bg-white;
+  }
+
+  hr.divider {
+    @apply w-full h-2 border-none bg-gray-100;
+  }
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
-} */
-
-body {
-  /* color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb)); */
+input.input-gray {
+  @apply w-full p-2 text-lg text-[#666666] transition rounded-lg bg-gray-100 border border-gray-100;
 }
