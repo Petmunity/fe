@@ -42,9 +42,6 @@ export default function PetInfoPage() {
     }
   };
   const onSubmit = (data: any) => {
-    if (errors.name) {
-      toast("Name is required");
-    }
     const formData = {
       ...data,
       neutered: data.neutered === "true" ? true : false,
