@@ -11,12 +11,12 @@ const nextConfig = {
     });
     config.resolve.alias = {
       ...config.resolve.alias,
-      "@hooks": path.resolve(__dirname, "./src/app/hooks"),
-      "@images": path.resolve(__dirname, "./src/app/assets/images"),
-      "@svgs": path.resolve(__dirname, "./src/app/assets/svgs"),
-      "@": path.resolve(__dirname, "./src/app"),
-      "@components": path.resolve(__dirname, "./src/app/components"),
-      "@icons": path.resolve(__dirname, "./src/app/components/icons"),
+      "@hooks": path.resolve(__dirname, "./src/hooks"),
+      "@images": path.resolve(__dirname, "./src/assets/images"),
+      "@svgs": path.resolve(__dirname, "./src/assets/svgs"),
+      "@": path.resolve(__dirname, "./src/"),
+      "@components": path.resolve(__dirname, "./src/components"),
+      "@icons": path.resolve(__dirname, "./src/components/icons"),
     };
 
     return config;
