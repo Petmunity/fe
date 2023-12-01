@@ -37,7 +37,7 @@ export default function PetInfoPage() {
 
   const deleteImage = (index: number) => {
     if (Array.isArray(watchImages)) {
-      const newImages = watchImages.filter((i: number) => i !== index);
+      const newImages = watchImages.filter((_, i) => i !== index);
       setValue("images", newImages);
     }
   };
@@ -205,24 +205,25 @@ export default function PetInfoPage() {
             {watchImages && watchImages.length > 0 && (
               <div className="mb-8 w-full overflow-x-auto">
                 <div className="mt-4 flex gap-x-2.5">
-                  {watchImages.map(
-                    (image: Blob | MediaSource, index: number) => (
-                      <div key={index} className="mb-2 flex-shrink-0 relative">
-                        <div
-                          className="absolute select-none top-0 right-0  text-center cursor-pointer flex items-center justify-center w-5 h-5 rounded-full bg-gray-700 text-white text-xs font-medium"
-                          onClick={() => deleteImage(index)}
-                        >
-                          x
-                        </div>
-                        <Image
-                          src={URL.createObjectURL(image)}
-                          alt={`Image ${index}`}
-                          width={200}
-                          height={150}
-                        />
+                  {watchImages.map((image: File, index: number) => (
+                    <div
+                      key={image.size + image.type + index}
+                      className="mb-2 flex-shrink-0 relative"
+                    >
+                      <div
+                        className="absolute select-none top-0 right-0  text-center cursor-pointer flex items-center justify-center w-5 h-5 rounded-full bg-gray-700 text-white text-xs font-medium"
+                        onClick={() => deleteImage(index)}
+                      >
+                        x
                       </div>
-                    ),
-                  )}
+                      <Image
+                        src={URL.createObjectURL(image)}
+                        alt={`Image ${index}`}
+                        width={200}
+                        height={150}
+                      />
+                    </div>
+                  ))}
                 </div>
               </div>
             )}
