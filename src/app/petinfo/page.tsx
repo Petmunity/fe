@@ -1,11 +1,12 @@
 "use client";
 
 import { useForm } from "react-hook-form";
-import { DevTool } from "@hookform/devtools";
 import Header from "@/components/common/Header";
 import Image from "next/image";
 import { toast } from "react-toastify";
-import { useEffect } from "react";
+import Modal from "@/components/common/Modal";
+import useModal from "@/hooks/useModal";
+import SearchBreed from "./SearchBreed";
 
 interface FormData {
   name: string;
@@ -13,25 +14,31 @@ interface FormData {
   pet: string;
   images: any[];
   sex: string;
-  species: string;
+  breed: string;
   weight: number;
   neutered: boolean;
 }
 
+const validateImages = (value: File[] | undefined) => {
+  return value && value.length > 0 ? undefined : "아이의 사진을 추가해주세요!";
+};
+
 export default function PetInfoPage() {
+  const { isOpen, openModal, closeModal } = useModal();
+
   const {
     register,
     handleSubmit,
     watch,
     setValue,
-    control,
     formState: { errors },
   } = useForm<FormData>();
 
   const watchImages = watch("images");
+  const watchPet = watch("pet");
 
-  const handleUploadImages = (e: any) => {
-    const files = Array.from(e.target.files);
+  const handleUploadImages = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = Array.from(e.target.files || []);
     setValue("images", files);
   };
 
@@ -42,6 +49,7 @@ export default function PetInfoPage() {
     }
   };
   const onSubmit = (data: any) => {
+    console.log(data, "data");
     const formData = {
       ...data,
       neutered: data.neutered === "true" ? true : false,
@@ -50,15 +58,25 @@ export default function PetInfoPage() {
     toast.success("입력이 완료되었습니다.");
   };
 
-  // useEffect(() => {
-  //   console.log(errors, "errors");
-  //   for (const error in errors) {
-  //     toast.error(errors[error].message);
-  //   }
-  // }, [errors]);
+  const openModalHandler = () => {
+    if (!watchPet) {
+      toast.error("강아지인지 고양이인지 선택해주세요!");
+      return;
+    }
+    openModal();
+  };
 
   return (
     <>
+      <Modal isOpen={isOpen} onClose={closeModal}>
+        <div className="p-5 h-96  flex items-center  flex-col">
+          <SearchBreed
+            setValue={setValue}
+            closeModal={closeModal}
+            pet={watchPet}
+          />
+        </div>
+      </Modal>
       <Header title="애완동물 정보 기입" elements={{ left: <Header.Back /> }} />
       <main className="h-screen p-5">
         <form
@@ -68,12 +86,19 @@ export default function PetInfoPage() {
         >
           <div className="grid grid-cols-[0.5fr_2fr] items-center">
             <label htmlFor="name">이름</label>
-            <input
-              className="input-gray"
-              type="text"
-              id="name"
-              {...register("name", { required: "아이의 이름을 입력해주세요!" })}
-            />
+            <div>
+              <input
+                className="input-gray"
+                type="text"
+                id="name"
+                {...register("name", {
+                  required: "아이의 이름을 입력해주세요!",
+                })}
+              />
+              {errors?.name && (
+                <span className="text-red-500">{errors?.name.message}</span>
+              )}
+            </div>
           </div>
           <div className="grid grid-cols-[0.5fr_1fr_1fr] items-center space-x-2">
             <div className="flex flex-col">
@@ -102,24 +127,36 @@ export default function PetInfoPage() {
             </div>
           </div>
           <div className="grid grid-cols-[0.5fr_2fr] items-center">
-            <label htmlFor="species">종</label>
-            <input
-              className="input-gray"
-              type="text"
-              id="species"
-              {...register("species", { required: "종을 입력해주세요!" })}
-            />
+            <label htmlFor="breed">종</label>
+            <div>
+              <input
+                onClick={openModalHandler}
+                className="input-gray"
+                type="text"
+                id="breed"
+                readOnly
+                {...register("breed", { required: "종을 입력해주세요!" })}
+              />
+              {errors?.breed && (
+                <span className="text-red-500">{errors.breed.message}</span>
+              )}
+            </div>
           </div>
           <div className="grid grid-cols-[0.5fr_2fr] items-center">
             <label htmlFor="age">나이</label>
-            <input
-              type="date"
-              className="input-gray"
-              {...register("age", {
-                valueAsDate: true,
-                required: "아이의 생년월일을 입력해주세요!",
-              })}
-            />
+            <div>
+              <input
+                type="date"
+                className="input-gray"
+                {...register("age", {
+                  valueAsDate: true,
+                  required: "아이의 생년월일을 입력해주세요!",
+                })}
+              />
+              {errors?.age && (
+                <span className="text-red-500">{errors.age.message}</span>
+              )}
+            </div>
           </div>
           <div className="grid grid-cols-[0.5fr_1fr_1fr] items-center space-x-2">
             <label htmlFor="sex">성별</label>
@@ -146,19 +183,24 @@ export default function PetInfoPage() {
           </div>
           <div className="grid grid-cols-[0.5fr_2fr] items-center">
             <label htmlFor="weight">체중</label>
-            <input
-              className="input-gray"
-              type="text"
-              id="weight"
-              {...register("weight", {
-                required: "아이의 체중을 입력해주세요!",
-                pattern: {
-                  value: /^-?\d+(\.\d+)?$/,
-                  message: "숫자만 입력해주세요!",
-                },
-              })}
-              placeholder="4.2kg"
-            />
+            <div>
+              <input
+                className="input-gray"
+                type="text"
+                id="weight"
+                {...register("weight", {
+                  required: "아이의 체중을 입력해주세요!",
+                  pattern: {
+                    value: /^-?\d+(\.\d+)?$/,
+                    message: "숫자만 입력해주세요!",
+                  },
+                })}
+                placeholder="4.2kg"
+              />
+              {errors?.weight && (
+                <span className="text-red-500">{errors.weight.message}</span>
+              )}
+            </div>
           </div>
 
           <div className="grid grid-cols-[0.5fr_1fr_1fr] items-center space-x-2">
@@ -187,7 +229,13 @@ export default function PetInfoPage() {
 
           <div>
             <label htmlFor="file-uploader">사진</label>
-            <input type="file" className="hidden" {...register("images")} />
+            <input
+              type="file"
+              className="hidden"
+              {...register("images", {
+                validate: validateImages,
+              })}
+            />
             <label
               htmlFor="file-uploader"
               className="mt-4 flex w-full cursor-pointer items-center justify-center gap-x-1 rounded-sm border border-gray-200 py-3 text-xs font-medium text-gray-700"
@@ -227,6 +275,9 @@ export default function PetInfoPage() {
                 </div>
               </div>
             )}
+            {errors?.images && (
+              <span className="text-red-500">{errors.images.message}</span>
+            )}
           </div>
         </form>
       </main>
@@ -235,7 +286,6 @@ export default function PetInfoPage() {
           Submit
         </button>
       </section>
-      <DevTool control={control} />
     </>
   );
 }
