@@ -101,9 +101,8 @@ export default function PetInfoPage() {
             </div>
           </div>
           <div className="grid grid-cols-[0.5fr_1fr_1fr] items-center space-x-2">
-            <div className="flex flex-col">
-              <label>강아지</label>
-              <label>고양이</label>
+            <div className="flex">
+              <label>댕/냥</label>
             </div>
             <div className="flex justify-between">
               <label>강아지</label>
