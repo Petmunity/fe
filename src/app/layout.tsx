@@ -16,6 +16,7 @@ export default function RootLayout({
   return (
     <html lang="ko" className="bg-gray-50">
       <body className="md:max-w-[375px] w-full relative m-auto min-h-screen bg-white p-0 font-sans lining-nums text-gray-900 outline-none">
+        <div id="modal-root" />
         {children}
         <ToastContainer position="top-right" autoClose={5000} />
       </body>
