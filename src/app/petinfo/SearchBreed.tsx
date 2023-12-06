@@ -54,15 +54,15 @@ const SearchBreed = ({ setValue, closeModal, pet }: SearchBreedProps) => {
         onChange={handleSearch}
       />
 
-      <div className="flex flex-col px-4 overflow-y-auto max-h-80">
+      <div className="flex flex-col px-4 overflow-y-auto h-72">
         {searchResult.length > 0 &&
-          searchResult.map((breedItem: any) => (
+          searchResult.map((breed: Breed) => (
             <div
-              key={`${breedItem.id}_${breedItem.name}`}
+              key={`${breed.id}_${breed.name}`}
               className="flex cursor-pointer items-center gap-x-1 py-4"
-              onClick={() => handleBreedClick(breedItem.name)}
+              onClick={() => handleBreedClick(breed.name)}
             >
-              <span className="text-gray-900">{breedItem.name}</span>
+              <span className="text-gray-900">{breed.name}</span>
             </div>
           ))}
 
