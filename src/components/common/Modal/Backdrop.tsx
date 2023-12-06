@@ -9,9 +9,7 @@ export default function Backdrop({ isOpen, onClick }: BackdropProps) {
     <div
       hidden={!isOpen}
       onClick={onClick}
-      className={`${
-        isOpen ? "" : "hidden"
-      } fixed inset-0 z-50 h-full w-full bg-black opacity-50`}
+      className={`fixed inset-0 z-50 h-full w-full bg-black opacity-50`}
     />
   );
 }
