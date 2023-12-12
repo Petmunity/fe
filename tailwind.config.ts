@@ -8,7 +8,7 @@ const config: Config = {
   ],
   theme: {
     fontFamily: {
-      sans: ["Pretendard", "-apple-system", "sans-serif"],
+      sans: ["S-CoreDream-3Light", "-apple-system", "sans-serif"],
     },
     extend: {
       backgroundImage: {
