@@ -2,7 +2,7 @@
 
 import React from "react";
 import { useRouter } from "next/navigation";
-import { Arrow } from "@icons";
+import { Arrow } from "@/components/icons";
 
 export const Back = ({ href }: { href?: string }) => {
   const router = useRouter();
@@ -11,7 +11,7 @@ export const Back = ({ href }: { href?: string }) => {
 
   return (
     <a href={href} onClick={useBack} className="text-gray-400">
-      {/* <Arrow /> */}
+      <Arrow />
     </a>
   );
 };
