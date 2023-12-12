@@ -17,15 +17,21 @@ const config: Config = {
         primary: {
           current: "current",
           DEFAULT: "#7839EE",
+          100: "#d7d8ff",
+          200: "#EAECF0",
+          300: "#9E77ED",
         },
         gray: {
           DEFAULT: "#9AA4B2",
           100: "#F8F8F8",
+          150: "#EEF2F6",
           200: "#E9E9E9",
+          250: "#E2E2E2",
           300: "#D9D9D9",
           400: "#BFBFBF",
           500: "#A6A6A6",
           600: "#8C8C8C",
+          650: "#848484",
           700: "#737373",
           800: "#595959",
           900: "#404040",
@@ -54,6 +60,9 @@ const config: Config = {
       },
       animation: {
         pulse: "pulse 1.7s infinite",
+      },
+      fontSize: {
+        "2xs": ["0.625rem", "0.75rem"],
       },
     },
   },
