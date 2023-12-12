@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import colors from "tailwindcss/colors";
 
 const config: Config = {
   content: [
@@ -8,9 +9,28 @@ const config: Config = {
   ],
   theme: {
     fontFamily: {
-      sans: ["S-CoreDream-3Light", "-apple-system", "sans-serif"],
+      sans: ["SCoreDream", "-apple-system", "sans-serif"],
     },
     extend: {
+      colors: {
+        ...colors,
+        primary: {
+          current: "current",
+          DEFAULT: "#7839EE",
+        },
+        gray: {
+          DEFAULT: "#9AA4B2",
+          100: "#F8F8F8",
+          200: "#E9E9E9",
+          300: "#D9D9D9",
+          400: "#BFBFBF",
+          500: "#A6A6A6",
+          600: "#8C8C8C",
+          700: "#737373",
+          800: "#595959",
+          900: "#404040",
+        },
+      },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
