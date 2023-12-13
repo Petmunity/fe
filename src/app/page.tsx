@@ -1,10 +1,11 @@
-import BlockLinkButton from "@/components/BlockLinkButton";
+import DndButtonContainer from "@/components/DndButtonContainer";
 import NotiBanner from "@/components/NotiBanner";
 import TodayDiary from "@/components/TodayDiary";
 import Header from "@/components/common/Header";
 import Navbar from "@/components/common/Navbar";
 import { PlusCircle } from "@/components/icons";
 
+// TODO: 기본적으로 사용되는 글쓰기 버튼 => (산책,식사,화장실,간식...) 추가로 커스텀된 것도 api로 받아와야함..
 const buttonItems = [
   {
     src: "/assets/walking.png",
@@ -39,19 +40,7 @@ export default function Home() {
       <div className="flex flex-col p-4">
         <NotiBanner content="반려일기를 작성해주세요!" time="1분" />
         <div>
-          <div className="grid grid-cols-2 gap-4">
-            {buttonItems.map((item) => (
-              <>
-                <BlockLinkButton
-                  key={item.title}
-                  src={item.src}
-                  title={item.title}
-                  href={item.href}
-                  bgColor={item.bgColor}
-                />
-              </>
-            ))}
-          </div>
+          <DndButtonContainer buttonItems={buttonItems} />
           <div className="flex justify-end mt-2 px-3 py-1">
             <button className="text-primary text-2xs flex items-center gap-x-1">
               <PlusCircle />
