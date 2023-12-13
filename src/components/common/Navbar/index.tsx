@@ -49,7 +49,12 @@ export default function Navbar({
       style={{ gridTemplateColumns: `repeat(${items.length}, minmax(0, 1fr))` }}
     >
       {items?.map((item, idx) => (
-        <Navbar.Item icon={item.icon} label={item.label} href={item.href} />
+        <Navbar.Item
+          icon={item.icon}
+          label={item.label}
+          href={item.href}
+          key={item.href + idx}
+        />
       ))}
     </nav>
   );
