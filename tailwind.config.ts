@@ -9,7 +9,7 @@ const config: Config = {
   ],
   theme: {
     fontFamily: {
-      sans: ["SCoreDream", "-apple-system", "sans-serif"],
+      sans: ["var(--font-scdream)"],
     },
     extend: {
       colors: {
@@ -19,6 +19,7 @@ const config: Config = {
           DEFAULT: "#7839EE",
           100: "#d7d8ff",
           300: "#9E77ED",
+          900: "#875BF726",
         },
         gray: {
           DEFAULT: "#9AA4B2",
