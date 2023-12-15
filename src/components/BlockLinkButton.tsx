@@ -2,7 +2,8 @@
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { DropDown } from "./icons";
-import { Tooltip } from "react-tooltip";
+import { Tooltip, TooltipRefProps } from "react-tooltip";
+import { useRef } from "react";
 
 interface BlockLinkButtonProps {
   title: string;
@@ -23,6 +24,7 @@ export default function BlockLinkButton({
   toogleCanDrag,
 }: BlockLinkButtonProps) {
   const router = useRouter();
+  const tooltipRef = useRef<TooltipRefProps>(null);
 
   const handleRouterpush = () => {
     router.push(href);
@@ -35,6 +37,7 @@ export default function BlockLinkButton({
   const handleTooltipButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
     toogleCanDrag();
+    tooltipRef.current?.close();
   };
 
   return (
@@ -53,7 +56,12 @@ export default function BlockLinkButton({
             id="tooltip"
             onClick={handleDropDownClick}
           />
-          <Tooltip anchorSelect="#tooltip" clickable className="flex flex-col">
+          <Tooltip
+            anchorSelect="#tooltip"
+            clickable
+            className="flex flex-col"
+            ref={tooltipRef}
+          >
             <button onClick={handleTooltipButtonClick}>
               {canDrag === false ? "순서변경" : "변경완료"}
             </button>
@@ -61,13 +69,13 @@ export default function BlockLinkButton({
           </Tooltip>
         </div>
       </div>
-      <div className="flex justify-end">
+      <div className="flex justify-end  overflow-hidden">
         <Image
           className="object-contain"
           src={src}
           alt="diary-button"
           width={75}
-          height={50}
+          height={70}
         />
       </div>
     </div>
