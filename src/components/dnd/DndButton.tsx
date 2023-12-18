@@ -1,10 +1,10 @@
 "use client";
 import { useRef, useLayoutEffect, useState } from "react";
 import { useDrag, useDrop } from "react-dnd";
-import BlockLinkButton from "./BlockLinkButton";
+import DiaryButton from "./DiaryButton";
 import { DndItemType } from "@/types/dnd";
 
-interface DraggableButtonProps {
+interface DndButtonProps {
   id: string;
   title: string;
   href: string;
@@ -16,7 +16,7 @@ interface DraggableButtonProps {
   toogleCanDrag?: () => void;
 }
 
-const DraggableButton = ({
+const DndButton = ({
   id,
   title,
   href,
@@ -26,7 +26,7 @@ const DraggableButton = ({
   moveItem,
   canDrag,
   toogleCanDrag,
-}: DraggableButtonProps) => {
+}: DndButtonProps) => {
   const ref = useRef<HTMLDivElement | null>(null);
   const widthRef = useRef(0);
   const heightRef = useRef(0);
@@ -84,7 +84,7 @@ const DraggableButton = ({
       }}
       style={{ opacity: isDragging ? 0.5 : 1 }}
     >
-      <BlockLinkButton
+      <DiaryButton
         key={id}
         src={src}
         title={title}
@@ -97,4 +97,4 @@ const DraggableButton = ({
   );
 };
 
-export default DraggableButton;
+export default DndButton;

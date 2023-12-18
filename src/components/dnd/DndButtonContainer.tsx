@@ -1,7 +1,7 @@
 "use client";
 import { useState, useCallback } from "react";
 import { DndProvider } from "react-dnd";
-import DraggableButton from "./DraggableButton";
+import DndButton from "./DndButton";
 import { TouchBackend } from "react-dnd-touch-backend";
 import CustomDragLayer from "./CustomDragyer";
 
@@ -46,7 +46,7 @@ export default function DndButtonContainer({
       <DndProvider backend={TouchBackend} options={{ enableMouseEvents: true }}>
         <div className="grid grid-cols-2 gap-4">
           {items.map((item, index) => (
-            <DraggableButton
+            <DndButton
               key={item.title + index}
               id={item.title}
               index={index}

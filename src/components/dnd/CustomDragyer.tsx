@@ -1,6 +1,6 @@
 "use client";
 import { useDragLayer } from "react-dnd";
-import DraggableButton from "./DraggableButton";
+import DndButton from "./DndButton";
 
 function getItemStyles(
   currentOffset: {
@@ -45,7 +45,7 @@ const CustomDragLayer = (props: any) => {
           width: item.width,
         }}
       >
-        <DraggableButton
+        <DndButton
           id={item.id}
           title={item.title}
           index={item.index}

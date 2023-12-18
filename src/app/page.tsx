@@ -1,4 +1,4 @@
-import DndButtonContainer from "@/components/diary/DndButtonContainer";
+import DndButtonContainer from "@/components/dnd/DndButtonContainer";
 import NotiBanner from "@/components/NotiBanner";
 import TodayDiary from "@/components/TodayDiary";
 import Header from "@/components/common/Header";

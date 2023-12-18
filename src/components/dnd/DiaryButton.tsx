@@ -5,7 +5,7 @@ import { DropDown } from "../icons";
 import { Tooltip, TooltipRefProps } from "react-tooltip";
 import { useRef } from "react";
 
-interface BlockLinkButtonProps {
+interface DiaryButtonProps {
   title: string;
   href: string;
   src: string;
@@ -15,14 +15,14 @@ interface BlockLinkButtonProps {
 }
 // TODO: api 연결해야함
 
-export default function BlockLinkButton({
+export default function DiaryButton({
   title,
   href,
   src,
   bgColor,
   canDrag,
   toogleCanDrag,
-}: BlockLinkButtonProps) {
+}: DiaryButtonProps) {
   const router = useRouter();
   const tooltipRef = useRef<TooltipRefProps>(null);
 
@@ -78,6 +78,8 @@ export default function BlockLinkButton({
           alt="diary-button"
           width={75}
           height={70}
+          placeholder="blur"
+          blurDataURL="/assets/blur.png"
         />
       </div>
     </div>
