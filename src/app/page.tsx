@@ -1,9 +1,10 @@
-import DndButtonContainer from "@/components/DndButtonContainer";
+import DndButtonContainer from "@/components/diary/DndButtonContainer";
 import NotiBanner from "@/components/NotiBanner";
 import TodayDiary from "@/components/TodayDiary";
 import Header from "@/components/common/Header";
 import Navbar from "@/components/common/Navbar";
 import { PlusCircle } from "@/components/icons";
+import { Metadata } from "next/types";
 
 // TODO: 기본적으로 사용되는 글쓰기 버튼 => (산책,식사,화장실,간식...) 추가로 커스텀된 것도 api로 받아와야함..
 const buttonItems = [
@@ -33,6 +34,11 @@ const buttonItems = [
   },
 ];
 
+export const metadata: Metadata = {
+  title: "반려일기",
+  description: "반려동물과 함께하는 일상을 기록해보세요!",
+};
+
 export default function Home() {
   return (
     <div className="flex min-h-screen flex-col">
@@ -52,6 +58,7 @@ export default function Home() {
       <div className="h-1.5 bg-gray-100" />
       <div className="flex flex-col p-4">
         <h1 className="font-medium mb-3">오늘의 일기</h1>
+        {/* TODO: API 연동 */}
         <TodayDiary name="연두" userName="연두형아" />
       </div>
       <Navbar />
