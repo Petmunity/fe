@@ -19,6 +19,7 @@ const config: Config = {
           DEFAULT: "#7839EE",
           100: "#d7d8ff",
           300: "#9E77ED",
+          500: "#7E49FF",
           900: "#875BF726",
         },
         gray: {
@@ -35,6 +36,7 @@ const config: Config = {
           700: "#737373",
           800: "#595959",
           900: "#404040",
+          950: "#24242459",
         },
       },
       backgroundImage: {
