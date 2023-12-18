@@ -6,7 +6,7 @@ const nextConfig = {
   output: "standalone",
   webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
     config.module.rules.push({
-      test: /\.svg$/,
+      test: /\.svg$/i,
       use: ["@svgr/webpack"],
     });
     config.resolve.alias = {
@@ -23,11 +23,15 @@ const nextConfig = {
   },
   experimental: {
     turbo: {
-      loaders: {
-        ".svg": ["@svgr/webpack"],
+      rules: {
+        "*.svg": {
+          loaders: ["@svgr/webpack"],
+          as: "*.js",
+        },
       },
     },
   },
+  swcMinify: true,
 };
 
 module.exports = nextConfig;

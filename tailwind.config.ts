@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import colors from "tailwindcss/colors";
 
 const config: Config = {
   content: [
@@ -8,9 +9,36 @@ const config: Config = {
   ],
   theme: {
     fontFamily: {
-      sans: ["Pretendard", "-apple-system", "sans-serif"],
+      sans: ["var(--font-scdream)"],
     },
     extend: {
+      colors: {
+        ...colors,
+        primary: {
+          current: "current",
+          DEFAULT: "#7839EE",
+          100: "#d7d8ff",
+          300: "#9E77ED",
+          500: "#7E49FF",
+          900: "#875BF726",
+        },
+        gray: {
+          DEFAULT: "#9AA4B2",
+          100: "#F8F8F8",
+          150: "#EEF2F6",
+          200: "#E9E9E9",
+          250: "#E2E2E2",
+          300: "#D9D9D9",
+          400: "#BFBFBF",
+          500: "#A6A6A6",
+          600: "#8C8C8C",
+          650: "#848484",
+          700: "#737373",
+          800: "#595959",
+          900: "#404040",
+          950: "#24242459",
+        },
+      },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
@@ -31,9 +59,19 @@ const config: Config = {
             opacity: "0.4",
           },
         },
+        shake: {
+          "10%, 90%": { transform: "translate3d(-0.5px, 0, 0)" },
+          "20%, 80%": { transform: "translate3d(1px, 0, 0)" },
+          "30%, 50%, 70%": { transform: "translate3d(-2px, 0, 0)" },
+          "40%, 60%": { transform: "translate3d(2px, 0, 0)" },
+        },
       },
       animation: {
         pulse: "pulse 1.7s infinite",
+        shake: "shake 0.82s cubic-bezier(.36,.07,.19,.97) infinite both",
+      },
+      fontSize: {
+        "2xs": ["0.625rem", "0.75rem"],
       },
     },
   },
