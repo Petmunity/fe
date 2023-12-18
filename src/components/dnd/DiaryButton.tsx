@@ -78,8 +78,6 @@ export default function DiaryButton({
           alt="diary-button"
           width={75}
           height={70}
-          placeholder="blur"
-          blurDataURL="/assets/blur.png"
         />
       </div>
     </div>

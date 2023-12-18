@@ -55,6 +55,8 @@ export default function TodayDiary({ name, userName }: TodayDiaryProps) {
             alt="dog"
             width={124}
             height={160}
+            placeholder="blur"
+            blurDataURL="/assets/blur.png"
           />
         </div>
       </div>

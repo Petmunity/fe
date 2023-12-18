@@ -19,7 +19,7 @@ function getItemStyles(
   };
 }
 
-const CustomDragLayer = (props: any) => {
+const CustomDragLayer = (props: { canDrag: boolean }) => {
   const { itemType, isDragging, item, currentOffset } = useDragLayer(
     (monitor) => ({
       item: monitor.getItem(),

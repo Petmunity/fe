@@ -60,11 +60,7 @@ export default function DndButtonContainer({
             />
           ))}
         </div>
-        <CustomDragLayer
-          moveItem={moveItem}
-          canDrag={canDrag}
-          toogleCanDrag={toggleCanDrag}
-        />
+        <CustomDragLayer canDrag={canDrag} />
       </DndProvider>
     </>
   );

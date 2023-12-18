@@ -34,7 +34,7 @@ export const defaultItems = [
   {
     icon: <Myprofile />,
     label: "마이",
-    href: "/myprofile",
+    href: "/mypage",
   },
 ];
 
