@@ -2,7 +2,7 @@
 import NextAuth from "next-auth";
 import KakaoProvider from "next-auth/providers/kakao";
 
-export default NextAuth({
+const handler = NextAuth({
   session: {
     strategy: "jwt",
   },
@@ -30,3 +30,4 @@ export default NextAuth({
     },
   },
 });
+export { handler as GET, handler as POST };
