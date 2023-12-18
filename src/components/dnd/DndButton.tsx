@@ -16,7 +16,7 @@ interface DndButtonProps {
   toogleCanDrag?: () => void;
 }
 
-const DndButton = ({
+export default function DndButton({
   id,
   title,
   href,
@@ -26,7 +26,7 @@ const DndButton = ({
   moveItem,
   canDrag,
   toogleCanDrag,
-}: DndButtonProps) => {
+}: DndButtonProps) {
   const ref = useRef<HTMLDivElement | null>(null);
   const widthRef = useRef(0);
   const heightRef = useRef(0);
@@ -95,6 +95,4 @@ const DndButton = ({
       />
     </div>
   );
-};
-
-export default DndButton;
+}
