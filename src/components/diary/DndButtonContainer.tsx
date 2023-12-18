@@ -1,8 +1,9 @@
 "use client";
 import { useState, useCallback } from "react";
 import { DndProvider } from "react-dnd";
-import DraggableBlockLinkButton from "./DraggableButton";
+import DraggableButton from "./DraggableButton";
 import { TouchBackend } from "react-dnd-touch-backend";
+import CustomDragLayer from "./CustomDragyer";
 
 interface DndButtonContainerProps {
   buttonItems: {
@@ -41,23 +42,30 @@ export default function DndButtonContainer({
   );
 
   return (
-    <DndProvider backend={TouchBackend} options={{ enableMouseEvents: true }}>
-      <div className="grid grid-cols-2 gap-4">
-        {items.map((item, index) => (
-          <DraggableBlockLinkButton
-            key={item.title + index}
-            id={item.title}
-            index={index}
-            src={item.src}
-            title={item.title}
-            href={item.href}
-            bgColor={item.bgColor}
-            moveItem={moveItem}
-            canDrag={canDrag}
-            toogleCanDrag={toggleCanDrag}
-          />
-        ))}
-      </div>
-    </DndProvider>
+    <>
+      <DndProvider backend={TouchBackend} options={{ enableMouseEvents: true }}>
+        <div className="grid grid-cols-2 gap-4">
+          {items.map((item, index) => (
+            <DraggableButton
+              key={item.title + index}
+              id={item.title}
+              index={index}
+              src={item.src}
+              title={item.title}
+              href={item.href}
+              bgColor={item.bgColor}
+              moveItem={moveItem}
+              canDrag={canDrag}
+              toogleCanDrag={toggleCanDrag}
+            />
+          ))}
+        </div>
+        <CustomDragLayer
+          moveItem={moveItem}
+          canDrag={canDrag}
+          toogleCanDrag={toggleCanDrag}
+        />
+      </DndProvider>
+    </>
   );
 }

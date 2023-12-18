@@ -1,7 +1,7 @@
 "use client";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { DropDown } from "./icons";
+import { DropDown } from "../icons";
 import { Tooltip, TooltipRefProps } from "react-tooltip";
 import { useRef } from "react";
 
@@ -11,7 +11,7 @@ interface BlockLinkButtonProps {
   src: string;
   bgColor: string;
   canDrag: boolean;
-  toogleCanDrag: () => void;
+  toogleCanDrag?: () => void;
 }
 // TODO: api 연결해야함
 
@@ -36,8 +36,10 @@ export default function BlockLinkButton({
 
   const handleTooltipButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
-    toogleCanDrag();
-    tooltipRef.current?.close();
+    if (toogleCanDrag) {
+      toogleCanDrag();
+      tooltipRef.current?.close();
+    }
   };
 
   return (

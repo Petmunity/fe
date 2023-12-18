@@ -1,23 +1,22 @@
 "use client";
-import { useRef, useEffect } from "react";
+import { useRef, useLayoutEffect, useState } from "react";
 import { useDrag, useDrop } from "react-dnd";
 import BlockLinkButton from "./BlockLinkButton";
-import { getEmptyImage } from "react-dnd-html5-backend";
 import { DndItemType } from "@/types/dnd";
 
-interface DraggableBlockLinkButtonProps {
+interface DraggableButtonProps {
   id: string;
   title: string;
   href: string;
   src: string;
   bgColor: string;
   index: number;
-  moveItem: (dragIndex: number, hoverIndex: number) => void;
+  moveItem?: (dragIndex: number, hoverIndex: number) => void;
   canDrag: boolean;
-  toogleCanDrag: () => void;
+  toogleCanDrag?: () => void;
 }
 
-const DraggableBlockLinkButton = ({
+const DraggableButton = ({
   id,
   title,
   href,
@@ -27,12 +26,17 @@ const DraggableBlockLinkButton = ({
   moveItem,
   canDrag,
   toogleCanDrag,
-}: DraggableBlockLinkButtonProps) => {
-  const ref = useRef(null);
+}: DraggableButtonProps) => {
+  const ref = useRef<HTMLDivElement | null>(null);
+  const widthRef = useRef(0);
+  const heightRef = useRef(0);
+
+  const [width, setWidth] = useState(0);
+  const [height, setHeight] = useState(0);
 
   const [{ isDragging }, drag, preview] = useDrag({
     type: "button",
-    item: { id, index },
+    item: { id, index, src, href, bgColor, title, width, height },
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
     }),
@@ -45,29 +49,39 @@ const DraggableBlockLinkButton = ({
         return;
       }
       const dragIndex = item.index;
-      console.log(dragIndex, "!!!!");
       const hoverIndex = index;
 
       if (dragIndex === hoverIndex) {
         return;
       }
-
-      moveItem(dragIndex, hoverIndex);
+      if (moveItem) {
+        moveItem(dragIndex, hoverIndex);
+      }
 
       item.index = hoverIndex;
     },
     drop(item) {
-      moveItem(item.index, index);
+      if (moveItem) {
+        moveItem(item.index, index);
+      }
     },
   });
 
-  useEffect(() => {
-    preview(getEmptyImage(), { captureDraggingState: true });
+  useLayoutEffect(() => {
+    if (ref.current) {
+      widthRef.current = ref.current?.offsetWidth;
+      heightRef.current = ref.current?.offsetHeight;
+      setWidth(widthRef.current);
+      setHeight(heightRef.current);
+    }
   }, []);
 
   return (
     <div
-      ref={(node) => drag(drop(node))}
+      ref={(node) => {
+        ref.current = node;
+        drag(drop(node));
+      }}
       style={{ opacity: isDragging ? 0.5 : 1 }}
     >
       <BlockLinkButton
@@ -83,4 +97,4 @@ const DraggableBlockLinkButton = ({
   );
 };
 
-export default DraggableBlockLinkButton;
+export default DraggableButton;
