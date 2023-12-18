@@ -45,9 +45,7 @@ export default function DiaryButton({
   return (
     <div
       onClick={handleRouterpush}
-      className={`rounded-xl px-4 py-5 flex flex-col justify-between w-full h-[143px] cursor-pointer ${
-        canDrag ? "animate-shake" : ""
-      }`}
+      className={`rounded-xl px-4 py-5 flex flex-col justify-between w-full h-[143px] cursor-pointer`}
       style={{ backgroundColor: bgColor }}
     >
       <div className="flex justify-between">
