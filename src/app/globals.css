@@ -5,7 +5,7 @@
 @layer components {
   a.button-violet,
   button.button-violet {
-    @apply block text-center w-full py-3 text-lg font-bold text-white transition rounded-lg bg-[#c4aafe] border border-[#c4aafe];
+    @apply block text-center w-full py-3 text-lg font-bold text-white transition rounded-lg bg-primary-300 border border-primary-300;
   }
   form:invalid button.button-violet,
   button.button-violet :disabled,
