@@ -6,10 +6,10 @@ import DogData from "@/mock/dog.json";
 import CatData from "@/mock/cat.json";
 import { debounce } from "@/utils/debounce";
 
-interface SearchBreedProps {
+interface SearchKindProps {
   setValue: any;
   closeModal: () => void;
-  pet: string;
+  type: string;
 }
 
 interface Breed {
@@ -17,12 +17,12 @@ interface Breed {
   name: string;
 }
 
-const SearchBreed = ({ setValue, closeModal, pet }: SearchBreedProps) => {
+const SearchKind = ({ setValue, closeModal, type }: SearchKindProps) => {
   const [search, setSearch] = useState<string>("");
   const [searchResult, setSearchResult] = useState<Breed[]>([]);
 
   const debouncedSearch = debounce((value) => {
-    if (pet === "dog") {
+    if (type === "dog") {
       setSearchResult(DogData.filter((dog) => dog.name.includes(value)));
     } else {
       setSearchResult(CatData.filter((cat) => cat.name.includes(value)));
@@ -41,8 +41,8 @@ const SearchBreed = ({ setValue, closeModal, pet }: SearchBreedProps) => {
   };
 
   useEffect(() => {
-    setSearchResult(pet === "dog" ? DogData : CatData);
-  }, [pet]);
+    setSearchResult(type === "dog" ? DogData : CatData);
+  }, [type]);
 
   return (
     <div className="h-full w-full">
@@ -74,4 +74,4 @@ const SearchBreed = ({ setValue, closeModal, pet }: SearchBreedProps) => {
   );
 };
 
-export default SearchBreed;
+export default SearchKind;
