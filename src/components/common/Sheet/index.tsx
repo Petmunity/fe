@@ -15,14 +15,18 @@ export default function BottomSheet({
   children,
   className,
 }: BottomSheetProps) {
-  return isOpen ? (
+  return (
     <>
       <Backdrop isOpen={isOpen} onClick={closeSheet} />
       <div
-        className={`fixed inset-0 h-fit z-50 mx-auto mt-auto w-full overflow-y-auto rounded-t-xl bg-white md:max-w-[375px] ${className}`}
+        className={`fixed inset-0 h-fit z-50 mx-auto mt-auto w-full overflow-y-auto rounded-t-xl bg-white md:max-w-[375px] ${className} ${
+          isOpen
+            ? "transition-transform ease-out duration-300 transform translate-y-0"
+            : "transition-transform ease-out duration-300 transform translate-y-full"
+        }`}
       >
         {children}
       </div>
     </>
-  ) : null;
+  );
 }
