@@ -25,7 +25,8 @@
       "@svgs": ["./assets/svgs"],
       "@/*": ["./*"],
       "@components/*": ["./components/*"],
-      "@icons": ["./components/icons/index.ts"]
+      "@icons": ["./components/icons/index.ts"],
+      "@api": ["./app/api/*"]
     }
   },
   "include": [

@@ -36,7 +36,7 @@ const SearchKind = ({ setValue, closeModal, type }: SearchKindProps) => {
   };
 
   const handleBreedClick = (selectedBreed: string) => {
-    setValue("breed", selectedBreed);
+    setValue("kind", selectedBreed);
     closeModal();
   };
 

@@ -5,8 +5,9 @@ import Header from "@/components/common/Header";
 import Image from "next/image";
 import { toast } from "react-toastify";
 import Modal from "@/components/common/Modal";
-import useModal from "@/hooks/useModal";
+import { useModal } from "@hooks/useModal";
 import SearchKind from "./SearchKind";
+import { api } from "../api";
 
 interface FormData {
   name: string;
@@ -48,14 +49,23 @@ export default function PetInfoPage() {
       setValue("images", newImages);
     }
   };
-  const onSubmit = (data: any) => {
-    console.log(data, "data");
+
+  const onSubmit = async (data: FormData) => {
     const formData = {
       ...data,
-      isNeuteringSurgery: data.isNeuteringSurgery === "true" ? true : false,
+      // isNeuteringSurgery: data.isNeuteringSurgery === "true" ? true : false,
+      isNeuteringSurgery: Boolean(data.isNeuteringSurgery),
+      weight: Number(data.weight),
     };
     console.log(formData, "formData");
-    toast.success("입력이 완료되었습니다.");
+
+    try {
+      await api.post("/pets/register", formData);
+      toast.success("입력이 완료되었습니다.");
+    } catch (error) {
+      console.error(error);
+      toast.error("입력 중 오류가 발생했습니다.");
+    }
   };
 
   const openModalHandler = () => {
@@ -73,7 +83,7 @@ export default function PetInfoPage() {
           <SearchKind
             setValue={setValue}
             closeModal={closeModal}
-            pet={watchType}
+            type={watchType}
           />
         </div>
       </Modal>

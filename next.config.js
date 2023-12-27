@@ -17,6 +17,7 @@ const nextConfig = {
       "@": path.resolve(__dirname, "./src/"),
       "@components": path.resolve(__dirname, "./src/components"),
       "@icons": path.resolve(__dirname, "./src/components/icons"),
+      "@api": path.resolve(__dirname, "./src/app/api"),
     };
 
     return config;
