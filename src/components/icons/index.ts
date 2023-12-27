@@ -6,6 +6,7 @@ import Noti from "./noti.svg";
 import Walk from "./walk.svg";
 import DropDown from "./dropdown.svg";
 import PlusCircle from "./plus-circle.svg";
+import Location from "./location.svg";
 
 export {
   Arrow,
@@ -16,4 +17,5 @@ export {
   Walk,
   DropDown,
   PlusCircle,
+  Location,
 };
