@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-const useWalkTimer = (start: boolean) => {
+export const useWalkTimer = (start: boolean) => {
   const [walkTime, setWalkTime] = useState(0);
   const [intervalId, setIntervalId] = useState<number | null>(null);
 
@@ -23,5 +23,3 @@ const useWalkTimer = (start: boolean) => {
 
   return walkTime;
 };
-
-export default useWalkTimer;
