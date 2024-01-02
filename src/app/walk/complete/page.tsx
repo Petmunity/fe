@@ -1,5 +1,5 @@
 "use client";
-import { useWalkStore } from "@/store/store";
+import { useWalkStore } from "@/store/walkStore";
 import Header from "@/components/common/Header";
 import { formatTime, formatDate } from "@/utils";
 import Link from "next/link";

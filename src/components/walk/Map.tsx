@@ -11,7 +11,7 @@ import { Location } from "../icons";
 import { useModal } from "@hooks/useModal";
 import { calculateDistance, formatTime } from "@/utils";
 import Modal from "../common/Modal";
-import { useWalkStore } from "@/store/store";
+import { useWalkStore } from "@/store/walkStore";
 import { useRouter } from "next/navigation";
 
 interface Position {
