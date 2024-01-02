@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 "use client";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { DndProvider } from "react-dnd";
 import DndButton from "./DndButton";
 import { TouchBackend } from "react-dnd-touch-backend";
@@ -28,7 +28,7 @@ export default function DndButtonContainer({
     return buttonItems;
   };
 
-  const [items, setItems] = useState(loadItemsFromLocalStorage);
+  const [items, setItems] = useState<buttonItemsType[]>([]);
   const [canDrag, setCanDrag] = useState(false);
 
   const toggleCanDrag = () => {
@@ -44,8 +44,6 @@ export default function DndButtonContainer({
 
           newItems.splice(dragIndex, 1);
           newItems.splice(hoverIndex, 0, draggedItem);
-
-          // 로컬 스토리지에 아이템의 순서를 저장하기
           localStorage.setItem("buttonItems", JSON.stringify(newItems));
 
           return newItems;
@@ -54,6 +52,18 @@ export default function DndButtonContainer({
     },
     [canDrag],
   );
+
+  useEffect(() => {
+    const loadItemsFromLocalStorage = () => {
+      const savedItemsString = localStorage.getItem("buttonItems");
+      if (savedItemsString) {
+        return JSON.parse(savedItemsString);
+      }
+      return buttonItems;
+    };
+
+    setItems(loadItemsFromLocalStorage);
+  }, [buttonItems]);
 
   return (
     <>
