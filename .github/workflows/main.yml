@@ -28,6 +28,9 @@ jobs:
           context: .
           push: true
           tags: gcr.io/stately-moon-405001/petmunity-fe:latest
+          build-args: |
+            NEXT_PUBLIC_API_URL=${{ secrets.NEXT_PUBLIC_API_URL }}
+            NEXT_PUBLIC_NAVER_API_KEY=${{ secrets.NEXT_PUBLIC_NAVER_API_KEY }}
 
       - name: Setup Google Cloud SDK
         uses: google-github-actions/setup-gcloud@v0.3.0

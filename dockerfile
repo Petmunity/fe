@@ -13,6 +13,13 @@ RUN yarn install --frozen-lockfile
 # Copy the rest of your app's source code
 COPY . .
 
+# Set environment variables
+ARG NEXT_PUBLIC_API_URL
+ARG NEXT_PUBLIC_NAVER_API_KEY 
+
+ENV NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL
+ENV NEXT_PUBLIC_NAVER_API_KEY =$NEXT_PUBLIC_NAVER_API_KEY 
+
 # Build app
 RUN yarn build
 
