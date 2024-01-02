@@ -23,6 +23,7 @@ ENV NEXT_PUBLIC_NAVER_API_KEY=$NEXT_PUBLIC_NAVER_API_KEY
 # Build app
 RUN yarn build
 
+
 # ---- Run Stage ----
 FROM node:18 AS runner
 
