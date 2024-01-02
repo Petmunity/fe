@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 
-const useModal = () => {
+export const useModal = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const openModal = () => setIsOpen(true);
@@ -9,5 +9,3 @@ const useModal = () => {
 
   return { isOpen, openModal, closeModal };
 };
-
-export default useModal;

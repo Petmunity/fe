@@ -5,18 +5,19 @@ import Header from "@/components/common/Header";
 import Image from "next/image";
 import { toast } from "react-toastify";
 import Modal from "@/components/common/Modal";
-import useModal from "@/hooks/useModal";
-import SearchBreed from "./SearchBreed";
+import { useModal } from "@hooks/useModal";
+import SearchKind from "./SearchKind";
+import { api } from "../api";
 
 interface FormData {
   name: string;
   age: Date;
-  pet: string;
+  type: string;
   images: any[];
-  sex: string;
-  breed: string;
+  gender: string;
+  kind: string;
   weight: number;
-  neutered: boolean;
+  isNeuteringSurgery: boolean;
 }
 
 const validateImages = (value: File[] | undefined) => {
@@ -35,7 +36,7 @@ export default function PetInfoPage() {
   } = useForm<FormData>();
 
   const watchImages = watch("images");
-  const watchPet = watch("pet");
+  const watchType = watch("type");
 
   const handleUploadImages = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files || []);
@@ -48,18 +49,27 @@ export default function PetInfoPage() {
       setValue("images", newImages);
     }
   };
-  const onSubmit = (data: any) => {
-    console.log(data, "data");
+
+  const onSubmit = async (data: FormData) => {
     const formData = {
       ...data,
-      neutered: data.neutered === "true" ? true : false,
+      // isNeuteringSurgery: data.isNeuteringSurgery === "true" ? true : false,
+      isNeuteringSurgery: Boolean(data.isNeuteringSurgery),
+      weight: Number(data.weight),
     };
     console.log(formData, "formData");
-    toast.success("입력이 완료되었습니다.");
+
+    try {
+      await api.post("/pets/register", formData);
+      toast.success("입력이 완료되었습니다.");
+    } catch (error) {
+      console.error(error);
+      toast.error("입력 중 오류가 발생했습니다.");
+    }
   };
 
   const openModalHandler = () => {
-    if (!watchPet) {
+    if (!watchType) {
       toast.error("강아지인지 고양이인지 선택해주세요!");
       return;
     }
@@ -70,10 +80,10 @@ export default function PetInfoPage() {
     <>
       <Modal isOpen={isOpen} onClose={closeModal}>
         <div className="p-5 h-96  flex items-center  flex-col">
-          <SearchBreed
+          <SearchKind
             setValue={setValue}
             closeModal={closeModal}
-            pet={watchPet}
+            type={watchType}
           />
         </div>
       </Modal>
@@ -108,7 +118,7 @@ export default function PetInfoPage() {
               <label>강아지</label>
               <input
                 type="radio"
-                {...register("pet", {
+                {...register("type", {
                   required: "강아지인지 고양이인지 체크해주세요!",
                 })}
                 value="dog"
@@ -118,7 +128,7 @@ export default function PetInfoPage() {
               <label>고양이</label>
               <input
                 type="radio"
-                {...register("pet", {
+                {...register("type", {
                   required: "강아지인지 고양이인지 체크해주세요!",
                 })}
                 value="cat"
@@ -133,10 +143,10 @@ export default function PetInfoPage() {
                 className="input-gray"
                 type="text"
                 readOnly
-                {...register("breed", { required: "종을 입력해주세요!" })}
+                {...register("kind", { required: "종을 입력해주세요!" })}
               />
-              {errors?.breed && (
-                <span className="text-red-500">{errors.breed.message}</span>
+              {errors?.kind && (
+                <span className="text-red-500">{errors.kind.message}</span>
               )}
             </div>
           </label>
@@ -164,7 +174,7 @@ export default function PetInfoPage() {
               <label>수컷</label>
               <input
                 type="radio"
-                {...register("sex", {
+                {...register("gender", {
                   required: "아이의 성별을 등록해주세요!",
                 })}
                 value="male"
@@ -174,15 +184,15 @@ export default function PetInfoPage() {
               <label>암컷</label>
               <input
                 type="radio"
-                {...register("sex", {
+                {...register("gender", {
                   required: "아이의 성별을 등록해주세요!",
                 })}
                 value="female"
               />
             </div>
           </label>
-          {errors.sex && (
-            <span className="text-red-500">{errors.sex.message}</span>
+          {errors.gender && (
+            <span className="text-red-500">{errors.gender.message}</span>
           )}
           <label className="grid grid-cols-[0.5fr_2fr] items-center">
             체중
@@ -211,7 +221,7 @@ export default function PetInfoPage() {
               <label>O</label>
               <input
                 type="radio"
-                {...register("neutered", {
+                {...register("isNeuteringSurgery", {
                   required: "중성화 여부를 체크해주세요!",
                 })}
                 value="true"
@@ -221,7 +231,7 @@ export default function PetInfoPage() {
               <label>X</label>
               <input
                 type="radio"
-                {...register("neutered", {
+                {...register("isNeuteringSurgery", {
                   required: "중성화 여부를 체크해주세요!",
                 })}
                 value="false"
@@ -229,8 +239,10 @@ export default function PetInfoPage() {
             </div>
             <div></div>
           </label>
-          {errors.neutered && (
-            <span className="text-red-500">{errors.neutered.message}</span>
+          {errors.isNeuteringSurgery && (
+            <span className="text-red-500">
+              {errors.isNeuteringSurgery.message}
+            </span>
           )}
 
           <input

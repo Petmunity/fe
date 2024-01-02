@@ -2,7 +2,7 @@
 
 import { useState, useEffect, PropsWithChildren } from "react";
 import { createPortal } from "react-dom";
-import Backdrop from "./Backdrop";
+import Backdrop from "../Backdrop";
 
 interface ModalProps {
   isOpen: boolean;

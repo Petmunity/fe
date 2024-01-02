@@ -1,9 +1,9 @@
 "use client";
-import { useRouter } from "next/navigation";
+
 import Image from "next/image";
 import { DropDown } from "../icons";
-import { Tooltip, TooltipRefProps } from "react-tooltip";
-import { useRef } from "react";
+import { Tooltip } from "react-tooltip";
+import { useDiaryButton } from "@hooks/useDiaryButton";
 
 interface DiaryButtonProps {
   title: string;
@@ -17,30 +17,18 @@ interface DiaryButtonProps {
 
 export default function DiaryButton({
   title,
-  href,
   src,
   bgColor,
+  href,
   canDrag,
   toogleCanDrag,
 }: DiaryButtonProps) {
-  const router = useRouter();
-  const tooltipRef = useRef<TooltipRefProps>(null);
-
-  const handleRouterpush = () => {
-    router.push(href);
-  };
-
-  const handleDropDownClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.stopPropagation();
-  };
-
-  const handleTooltipButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.stopPropagation();
-    if (toogleCanDrag) {
-      toogleCanDrag();
-      tooltipRef.current?.close();
-    }
-  };
+  const {
+    handleRouterpush,
+    handleDropDownClick,
+    handleTooltipButtonClick,
+    tooltipRef,
+  } = useDiaryButton({ href, canDrag, toogleCanDrag });
 
   return (
     <div
@@ -65,7 +53,6 @@ export default function DiaryButton({
             <button onClick={handleTooltipButtonClick}>
               {canDrag === false ? "순서변경" : "변경완료"}
             </button>
-            <button>삭제</button>
           </Tooltip>
         </div>
       </div>
