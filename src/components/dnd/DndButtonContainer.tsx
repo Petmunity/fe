@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 "use client";
 import { useState, useCallback, useEffect } from "react";
+import Loading from "./DndLoading";
 import { DndProvider } from "react-dnd";
 import DndButton from "./DndButton";
 import { TouchBackend } from "react-dnd-touch-backend";
@@ -20,16 +21,9 @@ interface DndButtonContainerProps {
 export default function DndButtonContainer({
   buttonItems,
 }: DndButtonContainerProps) {
-  const loadItemsFromLocalStorage = () => {
-    const savedItemsString = localStorage.getItem("buttonItems");
-    if (savedItemsString) {
-      return JSON.parse(savedItemsString);
-    }
-    return buttonItems;
-  };
-
   const [items, setItems] = useState<buttonItemsType[]>([]);
   const [canDrag, setCanDrag] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const toggleCanDrag = () => {
     setCanDrag((prev) => !prev);
@@ -57,14 +51,19 @@ export default function DndButtonContainer({
     const loadItemsFromLocalStorage = () => {
       const savedItemsString = localStorage.getItem("buttonItems");
       if (savedItemsString) {
+        setIsLoading(false);
         return JSON.parse(savedItemsString);
       }
+      setIsLoading(false);
       return buttonItems;
     };
 
     setItems(loadItemsFromLocalStorage);
   }, [buttonItems]);
 
+  if (isLoading) {
+    return <Loading />;
+  }
   return (
     <>
       <DndProvider backend={TouchBackend} options={{ enableMouseEvents: true }}>
