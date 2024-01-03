@@ -116,7 +116,7 @@ export default function Map() {
   }, []);
 
   return (
-    <div>
+    <div className="relative">
       <NavermapsProvider
         ncpClientId={`${process.env.NEXT_PUBLIC_NAVER_API_KEY}`}
       >
@@ -134,7 +134,7 @@ export default function Map() {
               </button>
             </div>
           </Modal>
-          <MapDiv style={{ width: "100%", height: "100vh" }}>
+          <MapDiv style={{ width: "100%", height: "90vh" }}>
             <div className="relative">
               <button className="absolute top-64 left-2.5 z-10 bg-white flex items-center justify-center p-0.5 border border-black rounded">
                 <Location
@@ -176,7 +176,7 @@ export default function Map() {
           </div>
         </div>
       </NavermapsProvider>
-      <section className="absolute z-20 bottom-0 w-full ">
+      <section className="absolute z-20 bottom-0 w-full">
         <button onClick={openModal} form="hook-form" className="button-violet">
           도착
         </button>

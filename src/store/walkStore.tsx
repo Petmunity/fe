@@ -1,3 +1,4 @@
+import { produce } from "immer";
 import { create } from "zustand";
 
 type Position = {
@@ -35,13 +36,28 @@ export const useWalkStore = create<WalkStore>((set) => ({
   setEndTime: (endTime: Date | null) => set({ endTime }),
   setCenter: (center: Position) => set({ center }),
   setEndPosition: (endPosition: Position) => set({ endPosition }),
+  // setTotalDistance: (
+  //   distanceUpdateFunction: (prevDistance: number) => number,
+  // ) =>
+  //   set((state) => ({
+  //     totalDistance: distanceUpdateFunction(state.totalDistance),
+  //   })),
+  // setPath: (pathUpdateFunction: (prevPath: Position[]) => Position[]) =>
+  //   set((state) => ({ path: pathUpdateFunction(state.path) })),
   setTotalDistance: (
     distanceUpdateFunction: (prevDistance: number) => number,
   ) =>
-    set((state) => ({
-      totalDistance: distanceUpdateFunction(state.totalDistance),
-    })),
+    set(
+      produce((state) => {
+        state.totalDistance = distanceUpdateFunction(state.totalDistance);
+      }),
+    ),
+
   setPath: (pathUpdateFunction: (prevPath: Position[]) => Position[]) =>
-    set((state) => ({ path: pathUpdateFunction(state.path) })),
+    set(
+      produce((state) => {
+        state.path = pathUpdateFunction(state.path);
+      }),
+    ),
   setTotalTime: (totalTime: number) => set({ totalTime }),
 }));

@@ -4,7 +4,7 @@ import Map from "@/components/walk/Map";
 import Header from "@/components/common/Header";
 
 export default function WalkStartPage() {
-  const [countdown, setCountdown] = useState(3);
+  const [countdown, setCountdown] = useState(5);
   const [showMap, setShowMap] = useState(false);
 
   useEffect(() => {

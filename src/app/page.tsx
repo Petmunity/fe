@@ -11,7 +11,7 @@ const buttonItems = [
   {
     src: "/assets/walking.png",
     title: "산책",
-    href: "/diary/walk",
+    href: "/walk/start",
     bgColor: "#2970FF",
   },
   {
