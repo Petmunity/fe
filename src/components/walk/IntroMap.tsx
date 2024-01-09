@@ -9,33 +9,48 @@ import {
 } from "react-naver-maps";
 import { toast } from "react-toastify";
 import { Location } from "../icons";
+import Skeleton from "../Skeleton";
 
 export default function IntroMap() {
   const initialPosition = { lat: 37.3595704, lng: 127.105399 };
+
   const [center, setCenter] = useState(initialPosition);
+  const [isLoading, setIsLoading] = useState(true);
 
   const getMyLocation = () => {
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        const { latitude, longitude } = position.coords;
-        const currentPosition = { lat: latitude, lng: longitude };
-        setCenter(currentPosition);
-      },
-      (error) => {
-        console.log(error);
-        toast.error("현재 위치를 가져올 수 없습니다. 다시 시도해주세요.");
-      },
-      { enableHighAccuracy: true },
-    );
+    return new Promise((resolve, reject) => {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          const currentPosition = { lat: latitude, lng: longitude };
+          setCenter(currentPosition);
+          setIsLoading(false);
+          resolve(currentPosition);
+        },
+        (error) => {
+          console.error(error);
+          setIsLoading(false);
+          reject(
+            toast.error("현재 위치를 가져올 수 없습니다. 다시 시도해주세요."),
+          );
+        },
+        { enableHighAccuracy: true },
+      );
+    });
+  };
+
+  const handleRecenter = async () => {
+    await getMyLocation();
   };
 
   useEffect(() => {
-    getMyLocation();
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
+    handleRecenter();
   }, []);
 
-  const handleRecenter = () => {
-    getMyLocation();
-  };
+  if (isLoading) {
+    return <Skeleton className="w-full h-[400px]" />;
+  }
 
   return (
     <div className="text-center font-semibold text-xl relative">
