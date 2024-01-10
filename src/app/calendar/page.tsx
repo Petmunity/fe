@@ -2,7 +2,10 @@
 import Header from "@/components/common/Header";
 import Navbar from "@/components/common/Navbar";
 import Tab from "@/components/common/Tab";
+import StreamChart from "@/components/report/StreamChart";
+import LineChart from "@/components/report/LineChart";
 import { useState } from "react";
+import data from "../../components/report/data.json";
 
 export default function CalendarPage() {
   const labels = ["캘린더", "리포트"];
@@ -30,9 +33,26 @@ export default function CalendarPage() {
         focusedIndex={focusedIndex}
         changeIndex={setFocusedIndex}
       />
-      <main>
+      <main className="pt-5">
         {focusedIndex === 0 && <h1>캘린더</h1>}
-        {focusedIndex === 1 && <h1>리포트</h1>}
+        {focusedIndex === 1 && (
+          <>
+            <div className="px-4 flex flex-col space-y-4">
+              <div>
+                <h1 className="font-medium text-lg leading-7 text-gray-900">
+                  오늘까지 " " 했어요!
+                </h1>
+                <div className="text-xs text-ellipsis mt-1 text-tertiary-600">
+                  지난달 이맘때보다 산책량이{" "}
+                  <span className="font-medium">1시간</span> 늘었어요.
+                </div>
+              </div>
+              <LineChart />
+            </div>
+            <hr className="divider"></hr>
+            <div className="px-4 flex flex-col"></div>
+          </>
+        )}
       </main>
       <Navbar />
     </div>
