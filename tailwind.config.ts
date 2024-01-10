@@ -22,6 +22,9 @@ const config: Config = {
           500: "#7E49FF",
           900: "#875BF726",
         },
+        tertiary: {
+          600: "#475467",
+        },
         gray: {
           DEFAULT: "#9AA4B2",
           100: "#F8F8F8",
