@@ -2,10 +2,9 @@
 import Header from "@/components/common/Header";
 import Navbar from "@/components/common/Navbar";
 import Tab from "@/components/common/Tab";
-import StreamChart from "@/components/report/StreamChart";
-import LineChart from "@/components/report/LineChart";
+import { LineChart, BarChart } from "@/components/report/chart";
+
 import { useState } from "react";
-import data from "../../components/report/data.json";
 
 export default function CalendarPage() {
   const labels = ["캘린더", "리포트"];
@@ -49,8 +48,19 @@ export default function CalendarPage() {
               </div>
               <LineChart />
             </div>
-            <hr className="divider"></hr>
-            <div className="px-4 flex flex-col"></div>
+            <hr className="divider my-4"></hr>
+            <div className="px-4 flex flex-col space-y-4">
+              <div>
+                <h1 className="font-medium text-lg leading-7 text-gray-900">
+                  식사량이 많이 늘었어요!
+                </h1>
+                <div className="text-xs text-ellipsis mt-1 text-tertiary-600">
+                  지난달 이맘때보다 식사량이{" "}
+                  <span className="font-medium">70g</span> 늘었어요.
+                </div>
+              </div>
+              <BarChart />
+            </div>
           </>
         )}
       </main>

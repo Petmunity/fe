@@ -1,5 +1,5 @@
 import { ResponsiveLine } from "@nivo/line";
-import data from "./mock.data.json";
+import data from "./line.data.json";
 
 const LineChart = () => (
   <div
