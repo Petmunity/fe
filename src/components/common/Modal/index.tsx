@@ -21,7 +21,7 @@ export default function Modal({
 
   useEffect(() => {
     setMounted(true);
-    setModalRoot(document.getElementById("modal-root") as HTMLElement);
+    setModalRoot(document.getElementById("modal-root"));
   }, []);
 
   if (typeof window === "undefined") return <></>;
