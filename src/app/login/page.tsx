@@ -9,10 +9,7 @@ export default function LoginPage() {
       >
         <div className="flex flex-col items-center">
           <span className="mb-2 text-primary-500">우리 아이 공유 다이어리</span>
-          <span
-            style={{ fontSize: 75 }}
-            className="tracking-tight text-primary-500"
-          >
+          <span className="tracking-tight font-semibold text-primary-500 text-6xl">
             펫뮤니티
           </span>
         </div>
