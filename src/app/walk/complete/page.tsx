@@ -2,18 +2,17 @@
 import { useWalkStore } from "@/store/walkStore";
 import Header from "@/components/common/Header";
 import { formatTime, formatDate } from "@/utils";
-import Link from "next/link";
 import Lottie from "lottie-react";
 import dog from "./dog.json";
 import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 export default function CompletePage() {
-  const { center, endPosition, endTime, startTime, totalDistance, totalTime } =
+  const router = useRouter();
+  const { endTime, startTime, totalDistance, totalTime, resetStore } =
     useWalkStore();
-  //TODO: 산책결과 백엔드에 전달하는 API 연동해야함.
 
   useEffect(() => {
-    // 현재 URL을 히스토리에 추가
     window.history.pushState(null, document.title, window.location.href);
 
     // 뒤로 가기 버튼이 눌렸을 때 현재 페이지로 이동
@@ -31,6 +30,12 @@ export default function CompletePage() {
     };
   }, []);
 
+  //TODO: 산책결과 백엔드에 전달하는 API 연동해야함.
+  const handleComplete = () => {
+    router.replace("/");
+    resetStore();
+  };
+
   return (
     <>
       <div className="flex min-h-screen flex-col">
@@ -47,7 +52,7 @@ export default function CompletePage() {
             </div>
             <div>
               <h1>산책거리</h1>
-              <h1>{totalDistance}km</h1>
+              <h1>{totalDistance.toFixed(2)}km</h1>
             </div>
           </div>
         </main>
@@ -58,9 +63,9 @@ export default function CompletePage() {
         </div>
       </div>
       <section id="CTA" className="sticky bottom-0 bg-white px-5 pb-4">
-        <Link href="/" className="button-violet">
+        <button onClick={handleComplete} className="button-violet">
           산책종료
-        </Link>
+        </button>
       </section>
     </>
   );

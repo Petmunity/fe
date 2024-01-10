@@ -13,6 +13,8 @@ import { calculateDistance, formatTime } from "@/utils";
 import Modal from "../common/Modal";
 import { useWalkStore } from "@/store/walkStore";
 import { useRouter } from "next/navigation";
+import Skeleton from "../Skeleton";
+import { toast } from "react-toastify";
 
 interface Position {
   lat: number;
@@ -35,23 +37,55 @@ export default function Map() {
     setStartTime,
     setTotalTime,
   } = useWalkStore();
-
+  const initialPosition = { lat: 37.3595704, lng: 127.105399 };
   const [timerId, setTimerId] = useState<NodeJS.Timeout | null>(null);
   const [prevPosition, setPrevPosition] = useState<Position | null>(null);
+  const [startPostion, setStartPosition] = useState<Position | null>(
+    initialPosition,
+  );
+  const [isLoading, setIsLoading] = useState(true);
 
   const router = useRouter();
+  const changeLocation = () => {
+    const newLocation = {
+      lat: 37.50516316738,
+      lng: 127.253240603371,
+    };
+
+    setPath((prevPath: Position[]) => [...prevPath, newLocation]);
+
+    if (prevPosition) {
+      const distance = calculateDistance(
+        prevPosition.lat,
+        prevPosition.lng,
+        newLocation.lat,
+        newLocation.lng,
+      );
+
+      setTotalDistance((prevDistance) => prevDistance + distance);
+    }
+
+    setCenter(newLocation); // 중심점 갱신
+  };
 
   const getMyLocation = () => {
     navigator.geolocation.getCurrentPosition(
       (position) => {
-        const { latitude, longitude } = position.coords;
-        const currentPosition = { lat: latitude, lng: longitude };
-        setCenter(currentPosition);
+        if (position && position.coords) {
+          const { latitude, longitude } = position.coords;
+          const currentPosition = { lat: latitude, lng: longitude };
+          setCenter(currentPosition);
+          setStartPosition(currentPosition);
+          setIsLoading(false);
+        }
       },
       (error) => {
-        console.log(error);
+        toast.error(
+          "현재 위치를 가져올 수 없습니다. 새로고침 후 다시 시도해주세요.",
+        );
+        setIsLoading(false);
       },
-      { enableHighAccuracy: true, maximumAge: 10000, timeout: 5000 },
+      { enableHighAccuracy: true, maximumAge: 10000, timeout: 10000 },
     );
   };
 
@@ -61,34 +95,39 @@ export default function Map() {
     }
 
     const track = () => {
-      navigator.geolocation.getCurrentPosition(
+      navigator.geolocation.watchPosition(
         (position) => {
           const { latitude, longitude } = position.coords;
           const currentPosition = { lat: latitude, lng: longitude };
 
-          if (prevPosition && prevPosition !== center) {
-            setPath((prevPath: Position[]) => [...prevPath, currentPosition]);
+          setPath((prevPath: Position[]) => [...prevPath, currentPosition]);
 
+          if (prevPosition) {
             const distance = calculateDistance(
-              currentPosition.lat,
-              currentPosition.lng,
               prevPosition.lat,
               prevPosition.lng,
+              currentPosition.lat,
+              currentPosition.lng,
             );
-            setTotalDistance((prevDistance: number) => prevDistance + distance);
+
+            setTotalDistance((prevDistance) => prevDistance + distance);
           }
 
           setPrevPosition(currentPosition);
-
-          setTimerId(setTimeout(track, 1000));
         },
         (error) => {
-          console.log(error);
+          toast.error(
+            "현재 위치를 가져올 수 없습니다. 새로고침 후 다시 시도해주세요.",
+          );
         },
         { enableHighAccuracy: true },
       );
+
+      // 다음 위치 업데이트를 위해 재귀 호출 대신에 한 번만 타이머 설정
+      setTimerId(setTimeout(track, 1000));
     };
 
+    // 초기 타이머 설정
     setTimerId(setTimeout(track, 1000));
   };
 
@@ -115,6 +154,18 @@ export default function Map() {
     };
   }, []);
 
+  if (isLoading) {
+    return (
+      <>
+        <Skeleton className="w-full h-full" />;
+        <span className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
+          현재 위치를 <br />
+          가져오는 중입니다.
+        </span>
+      </>
+    );
+  }
+
   return (
     <div className="relative">
       <NavermapsProvider
@@ -123,14 +174,17 @@ export default function Map() {
         <div className="flex flex-col">
           <Modal isOpen={isOpen} onClose={closeModal}>
             <div className="p-5 flex items-center flex-col">
-              <button
-                onClick={closeModal}
-                className="border-b w-full border-b-primary-300 py-2 rounded-md "
-              >
+              <button onClick={closeModal} className="border-b-2 w-full py-2">
                 산책 계속하기
               </button>
-              <button className="w-full py-2" onClick={stopTracking}>
+              <button
+                className="border-b-2  w-full py-2"
+                onClick={stopTracking}
+              >
                 산책 종료하기
+              </button>
+              <button className="w-full py-2" onClick={changeLocation}>
+                위치 변경하기(테스트용)
               </button>
             </div>
           </Modal>
@@ -143,9 +197,9 @@ export default function Map() {
                 />
               </button>
               <NaverMap defaultZoom={15} center={center} zoomControl={true}>
-                {center.lat !== 0 && (
+                {startPostion?.lat && (
                   <Marker
-                    position={center}
+                    position={startPostion}
                     icon={{
                       url: "http://maps.google.com/mapfiles/ms/icons/red-dot.png",
                     }}
@@ -176,7 +230,7 @@ export default function Map() {
           </div>
         </div>
       </NavermapsProvider>
-      <section className="absolute z-20 bottom-0 w-full">
+      <section className="absolute z-20 bottom-0 w-full px-20 py-5">
         <button onClick={openModal} form="hook-form" className="button-violet">
           도착
         </button>

@@ -24,7 +24,19 @@ interface WalkStore {
   setTotalDistance: (
     distanceUpdateFunction: (prevDistance: number) => number,
   ) => void;
+  resetStore: () => void; // 추가: 스토어를 초기값으로 리셋하는 함수
 }
+
+const initialState = {
+  center: { lat: 0, lng: 0 },
+  startPosition: { lat: 0, lng: 0 },
+  endPosition: { lat: 0, lng: 0 },
+  startTime: null,
+  endTime: null,
+  totalDistance: 0,
+  path: [],
+  totalTime: 0,
+};
 
 export const useWalkStore = create<WalkStore>((set) => ({
   center: { lat: 0, lng: 0 },
@@ -40,14 +52,6 @@ export const useWalkStore = create<WalkStore>((set) => ({
   setCenter: (center: Position) => set({ center }),
   setStartPosition: (startPosition: Position) => set({ startPosition }),
   setEndPosition: (endPosition: Position) => set({ endPosition }),
-  // setTotalDistance: (
-  //   distanceUpdateFunction: (prevDistance: number) => number,
-  // ) =>
-  //   set((state) => ({
-  //     totalDistance: distanceUpdateFunction(state.totalDistance),
-  //   })),
-  // setPath: (pathUpdateFunction: (prevPath: Position[]) => Position[]) =>
-  //   set((state) => ({ path: pathUpdateFunction(state.path) })),
   setTotalDistance: (
     distanceUpdateFunction: (prevDistance: number) => number,
   ) =>
@@ -56,7 +60,6 @@ export const useWalkStore = create<WalkStore>((set) => ({
         state.totalDistance = distanceUpdateFunction(state.totalDistance);
       }),
     ),
-
   setPath: (pathUpdateFunction: (prevPath: Position[]) => Position[]) =>
     set(
       produce((state) => {
@@ -64,4 +67,5 @@ export const useWalkStore = create<WalkStore>((set) => ({
       }),
     ),
   setTotalTime: (totalTime: number) => set({ totalTime }),
+  resetStore: () => set({ ...initialState }),
 }));
