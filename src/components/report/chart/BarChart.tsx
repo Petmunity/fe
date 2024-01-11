@@ -33,10 +33,7 @@ const BarChart = () => (
       axisLeft={null}
       labelSkipWidth={12}
       labelSkipHeight={12}
-      labelTextColor={{
-        from: "color",
-        modifiers: [["darker", 1.6]],
-      }}
+      labelTextColor="#ffffff"
       role="application"
       ariaLabel="식사량 그래프"
     />

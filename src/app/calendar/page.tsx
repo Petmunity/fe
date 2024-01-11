@@ -1,15 +1,24 @@
 "use client";
 import Header from "@/components/common/Header";
 import Navbar from "@/components/common/Navbar";
+import PillsButton from "@/components/common/PillsButton";
 import Tab from "@/components/common/Tab";
 import { LineChart, BarChart } from "@/components/report/chart";
 
 import { useState } from "react";
 
+enum CalendarView {
+  Monthly = "월별",
+  Weekly = "주별",
+  Daily = "일별",
+}
+
 export default function CalendarPage() {
   const labels = ["캘린더", "리포트"];
+  const options = Object.values(CalendarView);
 
   const [focusedIndex, setFocusedIndex] = useState(0);
+  const [activeOption, setActiveOption] = useState(options[0]);
   //   const { data, error } = useQuery('calendar', () => {
   //     return fetch('http://localhost:3000/api/calendar').then((res) =>
   //       res.json()
@@ -23,6 +32,10 @@ export default function CalendarPage() {
   //   if (!data) {
   //     return <div>Loading...</div>;
   //   }
+
+  const handleOptionChange = (option: CalendarView) => {
+    setActiveOption(option);
+  };
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -48,18 +61,55 @@ export default function CalendarPage() {
               </div>
               <LineChart />
             </div>
-            <hr className="divider my-4"></hr>
+            <hr className="divider my-4" />
             <div className="px-4 flex flex-col space-y-4">
-              <div>
-                <h1 className="font-medium text-lg leading-7 text-gray-900">
-                  식사량이 많이 늘었어요!
-                </h1>
-                <div className="text-xs text-ellipsis mt-1 text-tertiary-600">
-                  지난달 이맘때보다 식사량이{" "}
-                  <span className="font-medium">70g</span> 늘었어요.
-                </div>
-              </div>
-              <BarChart />
+              <PillsButton
+                options={options}
+                defaultOption="월별"
+                onOptionChange={handleOptionChange}
+              />
+              {activeOption === options[0] && (
+                <>
+                  <div>
+                    <h1 className="font-medium text-lg leading-7 text-gray-900">
+                      식사량이 많이 늘었어요!
+                    </h1>
+                    <div className="text-xs text-ellipsis mt-1 text-tertiary-600">
+                      지난달 이맘때보다 식사량이{" "}
+                      <span className="font-medium">70g</span> 늘었어요.
+                    </div>
+                  </div>
+                  <BarChart />
+                </>
+              )}
+              {activeOption === options[1] && (
+                <>
+                  <div>
+                    <h1 className="font-medium text-lg leading-7 text-gray-900">
+                      식사량이 많이 늘었어요!
+                    </h1>
+                    <div className="text-xs text-ellipsis mt-1 text-tertiary-600">
+                      지난주 이맘때보다 식사량이{" "}
+                      <span className="font-medium">70g</span> 늘었어요.
+                    </div>
+                  </div>
+                  <BarChart />
+                </>
+              )}
+              {activeOption === options[2] && (
+                <>
+                  <div>
+                    <h1 className="font-medium text-lg leading-7 text-gray-900">
+                      식사량이 많이 늘었어요!
+                    </h1>
+                    <div className="text-xs text-ellipsis mt-1 text-tertiary-600">
+                      어제보다 식사량이 <span className="font-medium">70g</span>{" "}
+                      늘었어요.
+                    </div>
+                  </div>
+                  <BarChart />
+                </>
+              )}
             </div>
           </>
         )}
